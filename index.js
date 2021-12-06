@@ -24,6 +24,7 @@ async function run() {
 
         const database = client.db("CreativeAgencies");
         const servicesCollection = database.collection("services");
+        const ordersCollection = database.collection("orders");
 
         //GET single service details
         app.get('/services/:id', async(req,res)=>{
@@ -31,7 +32,7 @@ async function run() {
             const query = {_id:ObjectId(id)};
             const result = await servicesCollection.findOne(query);
             res.json(result)
-        })
+        });
         //GET API (services load from DB to Front end)
         app.get('/services', async (req, res) =>{
             const cursor = servicesCollection.find({});
@@ -43,6 +44,13 @@ async function run() {
         app.post('/services', async (req, res) =>{
             const service = req.body;
             const result = await servicesCollection.insertOne(service);
+            //console.log(result);
+            res.send(result)
+        });
+        //POST Orders (add orders info from frontend to DB)
+        app.post('/orders', async (req, res) =>{
+            const order = req.body;
+            const result = await ordersCollection.insertOne(order);
             console.log(result);
             res.send(result)
         });
