@@ -39,6 +39,12 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result);
         });
+        //GET API (Orders load from DB to Front end)
+        app.get('/orders', async (req, res) =>{
+            const cursor = ordersCollection.find({});
+            const result = await cursor.toArray();
+            res.send(result);
+        });
 
         //POST Services (add services from frontend to DB)
         app.post('/services', async (req, res) =>{
